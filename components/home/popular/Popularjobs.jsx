@@ -13,10 +13,15 @@ import { useRouter } from "expo-router";
 import PopularJobCard from "../../common/cards/popular/PopularJobCard";
 import { SIZES } from "../../../constants";
 
+import useFetch from "../../../hook/useFetch";
+
 const Popularjobs = () => {
   const router = useRouter();
-  const isLoading = false;
-  const error = false;
+  const { data, isLoading, error, refetch } = useFetch("search", {
+    query: "React developer",
+    num_pages: 1,
+  });
+  console.log(process.env.RAPID_API_KEY);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,7 +38,7 @@ const Popularjobs = () => {
           <Text>Something</Text>
         ) : (
           <FlatList
-            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]}
+            data={data}
             renderItem={({ item }) => <PopularJobCard item={item} />}
             keyExtractor={(item) => item?.job_id}
             contentContainerStyle={{ columnGap: SIZES.medium }}
