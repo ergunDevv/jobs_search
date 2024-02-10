@@ -21,7 +21,6 @@ const Popularjobs = () => {
     query: "React developer",
     num_pages: 1,
   });
-  console.log(process.env.RAPID_API_KEY);
   return (
     <View style={styles.container}>
       <View style={styles.header}>

@@ -3,8 +3,6 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import styles from "./popularjobcard.style";
 
 const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
-  const apiUrl = process.env.RAPID_API_KEY;
-  console.log(apiUrl);
   return (
     <TouchableOpacity
       style={styles.container(selectedJob, item)}
@@ -17,6 +15,16 @@ const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
           style={styles.logoImage}
         />
       </TouchableOpacity>
+      <Text style={styles.companyName} numberOfLines={1}>
+        {item.employer_name}
+      </Text>
+
+      <View style={styles.infoContainer}>
+        <Text stlye={styles.jobName(selectedJob, item)} numberOfLines={1}>
+          {item.job_title}
+        </Text>
+        <Text style={styles.location}>{item.job_country}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
