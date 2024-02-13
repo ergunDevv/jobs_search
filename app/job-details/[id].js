@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from "react-native";
-import { Stack, useRouter, useSearchParams } from "expo-router";
+import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 
 import {
@@ -22,8 +22,12 @@ import { COLORS, icons, SIZES } from "../../constants";
 import useFetch from "../../hook/useFetch";
 
 const JobDetails = () => {
-  const params = useSearchParams();
+  const params = useLocalSearchParams();
   const router = useRouter();
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {};
 
   const { data, isLoading, error, refetch } = useFetch("job-details", {
     job_id: params.id,
@@ -48,6 +52,27 @@ const JobDetails = () => {
           headerTitle: "",
         }}
       />
+      <>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          {isLoading ? (
+            <ActivityIndicator size="large" color={COLORS.primary} />
+          ) : error ? (
+            <Text>Something went wrong. Try Again!</Text>
+          ) : data.length === 0 ? (
+            <Text>There is no data!</Text>
+          ) : (
+            <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
+              <Company />
+              <JobTabs />
+            </View>
+          )}
+        </ScrollView>
+      </>
     </SafeAreaView>
   );
 };
