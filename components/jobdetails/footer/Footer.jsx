@@ -6,8 +6,18 @@ import { icons } from "../../../constants";
 
 const Footer = ({ url }) => {
   return (
-    <View>
-      <Text>Footer</Text>
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.likeBtn}>
+        <Image
+          source={icons.heartOutline}
+          resizeMode="contain"
+          style={styles.likeBtnImage}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.applyBtn}>
+        <Text style={styles.applyBtnText}>Apply For Job</Text>
+      </TouchableOpacity>
     </View>
   );
 };
