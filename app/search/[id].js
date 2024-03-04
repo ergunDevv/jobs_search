@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Stack, useRouter, useSearchParams } from "expo-router";
+import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 import { Text, SafeAreaView } from "react-native";
 import axios from "axios";
 
@@ -15,7 +15,7 @@ import { COLORS, icons, SIZES } from "../../constants";
 import styles from "../../styles/search";
 
 const JobSearch = () => {
-  const params = useSearchParams();
+  const params = useLocalSearchParams();
   const router = useRouter();
 
   const [searchResult, setSearchResult] = useState([]);
@@ -26,13 +26,14 @@ const JobSearch = () => {
   const handleSearch = async () => {
     setSearchLoader(true);
     setSearchResult([]);
+    const rapidApiKey = process.env.RAPID_API_KEY;
 
     try {
       const options = {
         method: "GET",
         url: `https://jsearch.p.rapidapi.com/search`,
         headers: {
-          "X-RapidAPI-Key": "",
+          "X-RapidAPI-Key": `${rapidApiKey}`,
           "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
         },
         params: {
